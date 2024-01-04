@@ -3,7 +3,7 @@ from pydantic import BaseModel
 from sqlalchemy.orm import Session
 
 import api
-from api.db import get_db
+from api.db import get_db, HolidayStatus
 
 router = APIRouter(
     prefix='/elf',
@@ -20,7 +20,7 @@ class ElfAdd(ElfBase):
 
 
 class ElfUpdate(ElfAdd):
-    pass
+    holiday_status: HolidayStatus = HolidayStatus.NONE
 
 
 class Elf(ElfUpdate):
@@ -59,7 +59,7 @@ def update_elf(elf_id: int, elf: ElfUpdate, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="Elf not found")
     db.delete(db_elf)
 
-    db_elf = api.db.Elf(id=elf_id, name=elf.name)
+    db_elf = api.db.Elf(id=elf_id, name=elf.name, holiday_status=elf.holiday_status)
     db.add(db_elf)
     db.commit()
     return db_elf
