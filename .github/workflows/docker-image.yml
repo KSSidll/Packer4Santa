@@ -24,5 +24,5 @@ jobs:
     - name: Build and push Docker image
       run: |
         docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/packer4santa .
-        docker tag ${{ secrets.DOCKERHUB_USERNAME }}/packer4santa ${{ secrets.DOCKERHUB_USERNAME }}/santa-erp:latest
+        docker tag ${{ secrets.DOCKERHUB_USERNAME }}/packer4santa ${{ secrets.DOCKERHUB_USERNAME }}/packer4santa:latest
         docker push ${{ secrets.DOCKERHUB_USERNAME }}/packer4santa:latest
