@@ -34,8 +34,8 @@ class Package(Base):
     __tablename__ = "package"
 
     id = Column(Integer, primary_key=True, index=True)
-    description = Column(String)
-    elf_id = Column(Integer, ForeignKey("elf.id"))
+    description = Column(String, default=None)
+    elf_id = Column(Integer, ForeignKey("elf.id"), nullable=False)
 
     elf = relationship("Elf", back_populates="packages")
 
@@ -45,6 +45,6 @@ class Elf(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String)
-    holiday_status = Column(sqlalchemy.Enum(HolidayStatus), default=HolidayStatus.NONE)
+    holiday_status = Column(sqlalchemy.Enum(HolidayStatus), default=HolidayStatus.NONE, nullable=False)
 
     packages = relationship("Package", back_populates="elf")
